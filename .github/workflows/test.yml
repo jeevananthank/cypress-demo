@@ -32,7 +32,7 @@ jobs:
   test_fork:
     if: |
      github.repository_owner == 'jeevananthank' &&
-     (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true)
+     (github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.fork == true)
     runs-on: ubuntu-latest    
     steps:
       - name: Checkout
