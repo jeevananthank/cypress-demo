@@ -25,7 +25,8 @@ jobs:
         run: |
           echo main_repo
           echo testsecret=${{ secrets.TEST }}
-          cat result.txt
+          cat example.json
+        working-directory: cypress/fixtures
   test_fork:
     if: |
      github.repository_owner == 'jeevananthank' &&
@@ -36,4 +37,5 @@ jobs:
         run: |
           echo fork_repo
           echo testsecret=${{ secrets.TEST }}
-          cat result.txt
+          cat example.json
+        working-directory: cypress/fixtures
