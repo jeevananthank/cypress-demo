@@ -19,7 +19,13 @@ jobs:
      github.repository_owner == 'jeevananthank' &&
      (github.event_name != 'pull_request' && github.event.repository.fork == false) ||
      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
-    runs-on: ubuntu-latest    
+     
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        machines: [1, 2]
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -29,11 +35,18 @@ jobs:
           echo main_repo
           echo testsecret=${{ secrets.TEST }}
           cat result.txt
+          echo $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT
   test_fork:
     if: |
      github.repository_owner == 'jeevananthank' &&
      (github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.fork == true)
-    runs-on: ubuntu-latest    
+    
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        machines: [1, 2]
+        
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -43,3 +56,4 @@ jobs:
           echo fork_repo
           echo testsecret=${{ secrets.TEST }}
           cat result.txt        
+          echo $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT
